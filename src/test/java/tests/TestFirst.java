@@ -12,8 +12,9 @@ import pages.BasePage;
 import pages.HomePage;
 
 import java.time.Duration;
+import java.util.NoSuchElementException;
 
-public class TestFirst {
+public class TestFirst extends BaseTest{
 
     WebDriver driver = new ChromeDriver();
     WebDriverWait wdWait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -26,32 +27,21 @@ public class TestFirst {
 
     }
 
- //   @AfterMethod
- //   public void tearDown() {
- //       driver.quit();
- //   }
+    @AfterMethod
+    public void tearDown() {
+        driver.quit();
+    }
 
     @Test
-    public void homePageTest() throws InterruptedException {
-
-
-
-       WebElement acceptCookies = new WebDriverWait(driver, Duration.ofSeconds(10))
-               .until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@class=\"sc-1rhklln-0 jDfIno\"]")));
-       acceptCookies.click();
-
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.scrollBy(0,1000)");
-       driver.findElement(By.cssSelector("[class=\"sc-254p7e-4 dHaYKH\"] [class=\"MuiSvgIcon-root\"]")).click();
-
+    public void filterChecking() {
 
         HomePage hp = new HomePage(driver, wdWait);
         hp.clickPopularCategory();
         hp.clickShowAllSubCategoriesProducts();
         hp.setSortBy("Najnovije");
 
-
         WebElement priceRangeFilter = driver.findElement(By.xpath("//div[@class=\"sc-1kcrxl6-1 dGwieP\"]//label[text()=\"Min.\"]/../div/input"));
+        wdWait.until(ExpectedConditions.visibilityOf(priceRangeFilter));
         priceRangeFilter.sendKeys(Keys.chord(Keys.CONTROL, "a"));
         priceRangeFilter.sendKeys(Keys.BACK_SPACE);
         priceRangeFilter.sendKeys("1200");
