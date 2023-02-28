@@ -1,23 +1,20 @@
 package tests;
 
-import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.BasePage;
 import pages.HomePage;
 
 import java.time.Duration;
-import java.util.NoSuchElementException;
 
 public class TestFirst extends BaseTest{
 
-    WebDriver driver = new ChromeDriver();
-    WebDriverWait wdWait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
 
     @BeforeMethod
     public void init() {
@@ -35,6 +32,9 @@ public class TestFirst extends BaseTest{
     @Test
     public void filterChecking() {
 
+        setAcceptCookies();
+        closePopUp();
+
         HomePage hp = new HomePage(driver, wdWait);
         hp.clickPopularCategory();
         hp.clickShowAllSubCategoriesProducts();
@@ -45,7 +45,7 @@ public class TestFirst extends BaseTest{
         priceRangeFilter.sendKeys(Keys.chord(Keys.CONTROL, "a"));
         priceRangeFilter.sendKeys(Keys.BACK_SPACE);
         priceRangeFilter.sendKeys("1200");
-        driver.findElement(By.cssSelector("[class=\"sc-1vt7mai-0 sc-1kcrxl6-2 ddzlTv cGPxoX\"]")).click();
+        wdWait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("[class=\"sc-1vt7mai-0 sc-1kcrxl6-2 ddzlTv cGPxoX\"]")));
 
 
     }
